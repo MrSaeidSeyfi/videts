@@ -40,3 +40,4 @@ class ColorOps:
             result.append(cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2BGR))
         return result
 
+

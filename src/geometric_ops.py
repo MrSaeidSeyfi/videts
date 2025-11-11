@@ -18,3 +18,4 @@ class GeometricOps:
     def flip(frames, direction):
         return [cv2.flip(f, direction) for f in frames]
 
+

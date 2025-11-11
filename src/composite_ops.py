@@ -22,3 +22,4 @@ class CompositeOps:
             result.append(f)
         return result
 
+

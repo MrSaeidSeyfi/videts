@@ -32,3 +32,4 @@ class FilterOps:
             result.append(cv2.cvtColor(th, cv2.COLOR_GRAY2BGR))
         return result
 
+
