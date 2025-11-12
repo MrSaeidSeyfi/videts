@@ -23,3 +23,4 @@ class MorphOps:
         return [cv2.morphologyEx(f, cv2.MORPH_CLOSE, k) for f in frames]
 
 
+

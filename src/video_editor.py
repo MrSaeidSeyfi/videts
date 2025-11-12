@@ -150,5 +150,129 @@ class VideoEditor:
             y = int(args[2]) if len(args) > 2 else 0
             frames = self.comp.overlay(frames1, frames2, x, y)
             self.io.write(output, frames)
+        
+        elif cmd == 'zoom':
+            frames = self.io.read_all()
+            factor = float(args[0]) if args else 1.5
+            cx = int(args[1]) if len(args) > 1 else None
+            cy = int(args[2]) if len(args) > 2 else None
+            frames = self.geom.zoom(frames, factor, cx, cy)
+            self.io.write(output, frames)
+        
+        elif cmd == 'pan':
+            frames = self.io.read_all()
+            dx = int(args[0]) if args else 0
+            dy = int(args[1]) if len(args) > 1 else 0
+            frames = self.geom.pan(frames, dx, dy)
+            self.io.write(output, frames)
+        
+        elif cmd == 'freeze':
+            frames = self.io.read_all()
+            frame_idx = int(args[0]) if args else 0
+            duration = int(args[1]) if len(args) > 1 else 30
+            frames = self.temp.freeze(frames, frame_idx, duration)
+            self.io.write(output, frames)
+        
+        elif cmd == 'loop':
+            frames = self.io.read_all()
+            count = int(args[0]) if args else 2
+            frames = self.temp.loop(frames, count)
+            self.io.write(output, frames)
+        
+        elif cmd == 'duplicate':
+            frames = self.io.read_all()
+            factor = int(args[0]) if args else 2
+            frames = self.temp.duplicate(frames, factor)
+            self.io.write(output, frames)
+        
+        elif cmd == 'sepia':
+            frames = self.io.read_all()
+            frames = self.color.sepia(frames)
+            self.io.write(output, frames)
+        
+        elif cmd == 'warm':
+            frames = self.io.read_all()
+            intensity = int(args[0]) if args else 20
+            frames = self.color.warm(frames, intensity)
+            self.io.write(output, frames)
+        
+        elif cmd == 'cool':
+            frames = self.io.read_all()
+            intensity = int(args[0]) if args else 20
+            frames = self.color.cool(frames, intensity)
+            self.io.write(output, frames)
+        
+        elif cmd == 'posterize':
+            frames = self.io.read_all()
+            levels = int(args[0]) if args else 4
+            frames = self.color.posterize(frames, levels)
+            self.io.write(output, frames)
+        
+        elif cmd == 'emboss':
+            frames = self.io.read_all()
+            frames = self.filt.emboss(frames)
+            self.io.write(output, frames)
+        
+        elif cmd == 'cartoon':
+            frames = self.io.read_all()
+            frames = self.filt.cartoon(frames)
+            self.io.write(output, frames)
+        
+        elif cmd == 'vignette':
+            frames = self.io.read_all()
+            intensity = float(args[0]) if args else 0.3
+            frames = self.filt.vignette(frames, intensity)
+            self.io.write(output, frames)
+        
+        elif cmd == 'motion_blur':
+            frames = self.io.read_all()
+            size = int(args[0]) if args else 15
+            angle = float(args[1]) if len(args) > 1 else 0
+            frames = self.filt.motion_blur(frames, size, angle)
+            self.io.write(output, frames)
+        
+        elif cmd == 'fade_in':
+            frames = self.io.read_all()
+            duration = int(args[0]) if args else 30
+            frames = self.comp.fade_in(frames, duration)
+            self.io.write(output, frames)
+        
+        elif cmd == 'fade_out':
+            frames = self.io.read_all()
+            duration = int(args[0]) if args else 30
+            frames = self.comp.fade_out(frames, duration)
+            self.io.write(output, frames)
+        
+        elif cmd == 'crossfade':
+            frames1 = self.io.read_all()
+            io2 = VideoIO(args[0])
+            frames2 = io2.read_all()
+            duration = int(args[1]) if len(args) > 1 else 30
+            frames = self.comp.crossfade(frames1, frames2, duration)
+            self.io.write(output, frames)
+        
+        elif cmd == 'stack_v':
+            frames1 = self.io.read_all()
+            io2 = VideoIO(args[0])
+            frames2 = io2.read_all()
+            frames = self.comp.stack_vertical(frames1, frames2)
+            self.io.write(output, frames)
+        
+        elif cmd == 'text':
+            frames = self.io.read_all()
+            text = args[0] if args else "Text"
+            x = int(args[1]) if len(args) > 1 else 10
+            y = int(args[2]) if len(args) > 2 else 30
+            scale = float(args[3]) if len(args) > 3 else 1.0
+            color = (int(args[4]), int(args[5]), int(args[6])) if len(args) > 6 else (255, 255, 255)
+            thickness = int(args[7]) if len(args) > 7 else 2
+            frames = self.comp.text_overlay(frames, text, x, y, scale, color, thickness)
+            self.io.write(output, frames)
+        
+        elif cmd == 'extract':
+            frame_idx = int(args[0]) if args else 0
+            self.io.extract_frame(frame_idx, output)
+            print(f"Done: {output}")
+
 
 

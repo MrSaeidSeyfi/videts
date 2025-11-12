@@ -41,7 +41,18 @@ class VideoIO:
             writer.write(frame)
         writer.release()
     
+    def extract_frame(self, frame_idx, output_path):
+        self.cap.set(1, frame_idx)
+        ret, frame = self.cap.read()
+        if ret:
+            cv2.imwrite(output_path, frame)
+        return ret
+    
+    def get_frame_count(self):
+        return self.fc
+    
     def __del__(self):
         self.cap.release()
+
 
 
