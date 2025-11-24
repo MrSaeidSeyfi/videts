@@ -1,4 +1,4 @@
-#include "../include/VideoEditor_structured.h"
+#include "../include/VideoEditor.h"
 #include "VideoIO.h"
 #include "GeometricOps.h"
 #include "TemporalOps.h"
