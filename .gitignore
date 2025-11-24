@@ -1,0 +1,37 @@
+# Build folders
+/build/
+/cpp_project/build/
+
+# Visual Studio files
+/.vs/
+*.vcxproj*
+*.sln
+
+# CMake files
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+
+# Object files and binaries
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.lib
+*.a
+
+# IDE
+.vscode/
+
+# Python virtualenvs
+/test/env/
+venv/
+
+# Outputs and data
+/output/
+/data/*.mp4
+
+# Logs
+*.log
