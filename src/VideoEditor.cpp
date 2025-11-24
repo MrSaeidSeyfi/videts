@@ -86,7 +86,17 @@ public:
         else if (cmd == "fade_out") { auto frames = io->readAll(); int duration = args.empty() ? 30 : stoi(args[0]); frames = CompositeOps::fadeOut(frames, duration); io->write(output, frames); }
         else if (cmd == "crossfade") { auto frames1 = io->readAll(); VideoIO io2(args[0]); auto frames2 = io2.readAll(); int duration = args.size() > 1 ? stoi(args[1]) : 30; auto outF = CompositeOps::crossfade(frames1, frames2, duration); io->write(output, outF); }
         else if (cmd == "stack_v") { auto frames1 = io->readAll(); VideoIO io2(args[0]); auto frames2 = io2.readAll(); auto outF = CompositeOps::stackVertical(frames1, frames2); io->write(output, outF); }
-        else if (cmd == "text") { auto frames = io->readAll(); string text = args.empty() ? "Text" : args[0]; int x = args.size() > 1 ? stoi(args[1]) : 10; int y = args.size() > 2 ? stoi(args[2]) : 30; double scale = args.size() > 3 ? stod(args[3]) : 1.0; Scalar color = args.size() > 6 ? Scalar(stoi(args[6]), stoi(args[5]), stoi(args[4])) : Scalar(255,255,255); int thickness = args.size() > 7 ? stoi(args[7]) : 2; auto outF = CompositeOps::textOverlay(frames, text, x, y, scale, color, thickness); io->write(output, outF); }
+        else if (cmd == "text") {
+            auto frames = io->readAll();
+            std::string text = args.empty() ? "Text" : args[0];
+            int x = args.size() > 1 ? stoi(args[1]) : 10;
+            int y = args.size() > 2 ? stoi(args[2]) : 30;
+            double scale = args.size() > 3 ? stod(args[3]) : 1.0;
+            cv::Scalar color = args.size() > 6 ? cv::Scalar(stoi(args[6]), stoi(args[5]), stoi(args[4])) : cv::Scalar(255,255,255);
+            int thickness = args.size() > 7 ? stoi(args[7]) : 2;
+            auto outF = CompositeOps::textOverlay(frames, text, x, y, scale, color, thickness);
+            io->write(output, outF);
+        }
         else if (cmd == "extract") { int frameIdx = args.empty() ? 0 : stoi(args[0]); io->extractFrame(frameIdx, output); cout << "Done: " << output << endl; return; }
         else { cerr << "Unknown command: " << cmd << endl; return; }
         cout << "Done: " << output << endl;
