@@ -1,17 +1,27 @@
-CXX = g++
-CXXFLAGS = -std=c++11 -Wall -O2
-LIBS = `pkg-config --cflags --libs opencv4`
-TARGET = video_editor
-SOURCE = video_editor.cpp
+CXX := g++
+CXXFLAGS := -std=c++17 -O2 -Wall -Wextra -Iinclude
+PKG_CONFIG := pkg-config
+OPENCV_CFLAGS := $(shell $(PKG_CONFIG) --cflags opencv4)
+OPENCV_LIBS := $(shell $(PKG_CONFIG) --libs opencv4)
+
+SOURCES := $(wildcard src/*.cpp)
+OBJECTS := $(SOURCES:.cpp=.o)
+TARGET := videts
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCE)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SOURCE) $(LIBS)
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS) $(OPENCV_LIBS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(OPENCV_CFLAGS) -c $< -o $@
+
+run: all
+	./$(TARGET) $(ARGS)
 
 clean:
-	rm -f $(TARGET)
+	-rm -f $(OBJECTS) $(TARGET)
 
-.PHONY: all clean
+.PHONY: all run clean
 
 
