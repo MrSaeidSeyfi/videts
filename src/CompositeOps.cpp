@@ -35,16 +35,38 @@ std::vector<Mat> CompositeOps::fadeOut(const std::vector<Mat>& frames, int durat
 }
 
 std::vector<Mat> CompositeOps::crossfade(const std::vector<Mat>& frames1, const std::vector<Mat>& frames2, int duration) {
-    std::vector<Mat> result; int fadeLen = std::min(duration, (int)std::min(frames1.size(), frames2.size()));
-    for (size_t i = 0; i < frames1.size() - fadeLen; i++) result.push_back(frames1[i].clone());
+    std::vector<Mat> result;
+    int fadeLen = std::min(duration, (int)std::min(frames1.size(), frames2.size()));
+
+    for (size_t i = 0; i < frames1.size() - fadeLen; i++) {
+        result.push_back(frames1[i].clone());
+    }
+
     for (int i = 0; i < fadeLen; i++) {
-        int idx1 = frames1.size() - fadeLen + i; int idx2 = i;
+        int idx1 = (int)frames1.size() - fadeLen + i;
+        int idx2 = i;
         if (idx1 < (int)frames1.size() && idx2 < (int)frames2.size()) {
-            double alpha = (double)i / fadeLen; Mat f1, f2; frames1[idx1].convertTo(f1, CV_32F); frames2[idx2].convertTo(f2, CV_32F);
-            if (f1.size() != f2.size()) resize(f2, f2, f1.size()); Mat blended = f1 * (1 - alpha) + f2 * alpha; blended = min(blended, 255.0); blended = max(blended, 0.0); blended.convertTo(blended, CV_8U); result.push_back(blended);
+            double alpha = (double)i / fadeLen;
+            Mat f1, f2;
+            frames1[idx1].convertTo(f1, CV_32F);
+            frames2[idx2].convertTo(f2, CV_32F);
+
+            if (f1.size() != f2.size()) {
+                resize(f2, f2, f1.size());
+            }
+
+            Mat blended = f1 * (1 - alpha) + f2 * alpha;
+            blended = min(blended, 255.0);
+            blended = max(blended, 0.0);
+            blended.convertTo(blended, CV_8U);
+            result.push_back(blended);
         }
     }
-    for (size_t i = fadeLen; i < frames2.size(); i++) result.push_back(frames2[i].clone());
+
+    for (size_t i = fadeLen; i < frames2.size(); i++) {
+        result.push_back(frames2[i].clone());
+    }
+
     return result;
 }
 

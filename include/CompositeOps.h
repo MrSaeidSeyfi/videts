@@ -12,5 +12,5 @@ public:
     static std::vector<cv::Mat> fadeOut(const std::vector<cv::Mat>& frames, int duration);
     static std::vector<cv::Mat> crossfade(const std::vector<cv::Mat>& frames1, const std::vector<cv::Mat>& frames2, int duration);
     static std::vector<cv::Mat> stackVertical(const std::vector<cv::Mat>& frames1, const std::vector<cv::Mat>& frames2);
-    static std::vector<cv::Mat> textOverlay(const std::vector<cv::Mat>& frames, const std::string& text, int x, int y, double scale, cv::Scalar color, int thickness);
+    static std::vector<cv::Mat> textOverlay(const std::vector<cv::Mat>& frames, const std::string& text, int x, int y, double scale, const cv::Scalar& color, int thickness);
 };
