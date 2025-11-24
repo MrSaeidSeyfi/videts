@@ -54,6 +54,6 @@ std::vector<Mat> CompositeOps::stackVertical(const std::vector<Mat>& frames1, co
     return result;
 }
 
-std::vector<Mat> CompositeOps::textOverlay(const std::vector<Mat>& frames, const std::string& text, int x, int y, double scale, Scalar color, int thickness) {
-    std::vector<Mat> result; for (const auto& f : frames) { Mat frame = f.clone(); putText(frame, text, Point(x, y), FONT_HERSHEY_SIMPLEX, scale, color, thickness); result.push_back(frame); } return result;
+std::vector<Mat> CompositeOps::textOverlay(const std::vector<Mat>& frames, const std::string& text, int x, int y, double scale, const cv::Scalar& color, int thickness) {
+    std::vector<Mat> result; for (const auto& f : frames) { Mat frame = f.clone(); cv::putText(frame, text, cv::Point(x, y), cv::FONT_HERSHEY_SIMPLEX, scale, color, thickness); result.push_back(frame); } return result;
 }
