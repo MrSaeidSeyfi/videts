@@ -276,7 +276,14 @@ public:
             split(hsv, channels);
             channels[0].convertTo(channels[0], CV_32F);
             channels[0] = channels[0] + shift;
-            channels[0] = cv::max(channels[0] - 180*cv::floor(channels[0]/180),0);
+
+            Mat temp;
+            channels[0].copyTo(temp);
+            temp = temp / 180.0;
+            temp.forEach<float>([](float &p, const int*) { p = std::floor(p); });
+            temp = temp * 180.0;
+            channels[0] = cv::max(channels[0] - temp, 0.0f);
+
             channels[0].convertTo(channels[0], CV_8U);
             Mat merged;
             merge(channels, merged);
@@ -620,7 +627,7 @@ public:
         int startIdx = frames.size() - fadeFrames;
         for (size_t i = 0; i < frames.size(); i++) {
             double alpha;
-            if (i >= startIdx) {
+            if (i >= (size_t)startIdx) {
                 alpha = (fadeFrames > 0) ? 1.0 - (double)(i - startIdx) / fadeFrames : 0.0;
             } else {
                 alpha = 1.0;
