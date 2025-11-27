@@ -79,6 +79,3 @@ class ColorOps:
             quantized = (f // step) * step
             result.append(quantized.astype(np.uint8))
         return result
-
-
-

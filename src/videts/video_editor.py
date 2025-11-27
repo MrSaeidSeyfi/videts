@@ -7,8 +7,19 @@ from .morph_ops import MorphOps
 from .composite_ops import CompositeOps
 
 class VideoEditor:
-    def __init__(self, input_path):
-        self.io = VideoIO(input_path)
+    def __init__(self, source):
+        """Create a VideoEditor from a source.
+
+        `source` may be:
+          - a path to a video file (str)
+          - a list of OpenCV frames
+          - an existing VideoIO instance
+        """
+        if isinstance(source, VideoIO):
+            self.io = source
+        else:
+            # VideoIO constructor accepts either path or list of frames
+            self.io = VideoIO(source)
         self.geom = GeometricOps()
         self.temp = TemporalOps()
         self.color = ColorOps()
@@ -273,6 +284,3 @@ class VideoEditor:
             frame_idx = int(args[0]) if args else 0
             self.io.extract_frame(frame_idx, output)
             print(f"Done: {output}")
-
-
-

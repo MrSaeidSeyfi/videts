@@ -34,6 +34,3 @@ class TemporalOps:
             for _ in range(factor):
                 result.append(f.copy())
         return result
-
-
-

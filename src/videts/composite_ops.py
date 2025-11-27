@@ -78,6 +78,3 @@ class CompositeOps:
             cv2.putText(frame, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, scale, color, thickness)
             result.append(frame)
         return result
-
-
-

@@ -46,6 +46,3 @@ class GeometricOps:
             M = np.float32([[1, 0, dx], [0, 1, dy]])
             result.append(cv2.warpAffine(f, M, (w, h)))
         return result
-
-
-
